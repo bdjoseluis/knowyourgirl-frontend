@@ -1,0 +1,52 @@
+<div class="main-container">
+  <div class="card form-card">
+    <h2>{{ isEditing ? 'Editar Grupo' : 'Crear Nuevo Grupo' }}</h2>
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <div class="form-group">
+        <label>Nombre del Grupo</label>
+        <input formControlName="name" placeholder="Ej: Las Viajeras" />
+      </div>
+
+      <div formArrayName="members" class="members-grid">
+        <div *ngFor="let member of members.controls; let i = index" [formGroupName]="i" class="member-card">
+          <div class="member-header">
+            <h3>Miembro {{ i + 1 }}</h3>
+            <button type="button" class="btn-delete" (click)="removeMember(i)" *ngIf="members.length > 1">×</button>
+          </div>
+          
+          <input formControlName="name" placeholder="Nombre" />
+          <input formControlName="description" placeholder="Descripción" />
+          <div class="row">
+            <input formControlName="city" placeholder="Ciudad" />
+            <input formControlName="age" type="number" placeholder="Edad" />
+          </div>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button type="button" class="btn-secondary" (click)="addMember()">+ Añadir Miembro</button>
+        <button type="submit" class="btn-primary" [disabled]="form.invalid">
+          {{ isEditing ? 'Actualizar' : 'Guardar en BD' }}
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <hr class="separator">
+
+  <div class="list-container">
+    <h2>Grupos Registrados</h2>
+    <div class="groups-grid">
+      <div *ngFor="let g of groupsList" class="group-item">
+        <div class="group-info">
+          <h3>{{ g.nombre }}</h3>
+          <p>{{ g.personas.length }} miembros</p>
+        </div>
+        <div class="group-btns">
+          <button class="btn-edit" (click)="editGroup(g)">Editar</button>
+          <button class="btn-delete-list" (click)="deleteGroup(g.idGrupo)">Eliminar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
