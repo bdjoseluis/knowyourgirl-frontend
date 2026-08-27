@@ -1,28 +1,41 @@
-Proyecto: grupos-app (Angular)
+# KnowYourGirl — Frontend
 
-Este repositorio contiene los archivos del componente y servicio para un formulario de grupos.
+**Interfaz Angular para dar de alta grupos de personas y enviarlos por correo.**
+Es el front de la API [knowyourgirl](https://github.com/bdjoseluis/knowyourgirl).
 
-Instrucciones rápidas para integrarlo en un proyecto Angular existente:
+---
 
-1. Crea un nuevo proyecto Angular si no tienes uno:
-   npx -y @angular/cli new grupos-app --routing=false --style=css
-2. Copia las carpetas `src/app/group-form`, `src/app/services` y `src/app/models` desde aquí al `src/app/` de tu proyecto.
-3. Asegúrate de registrar `GroupFormComponent` en `app.module.ts` y de importar `ReactiveFormsModule` y `HttpClientModule` en el `AppModule`.
+## Qué hace
 
-Ejemplo de `AppModule` imports:
+- **Formulario de grupo**: nombre del grupo y las personas que lo componen
+  (nombre, descripción, edad, ciudad), añadiendo y quitando filas sobre la marcha
+- **Validación** antes de enviar, con Angular Forms
+- **Envío por correo** del grupo montado, a través de un servicio propio
 
-  import { ReactiveFormsModule } from '@angular/forms';
-  import { HttpClientModule } from '@angular/common/http';
+## Cómo está organizado
 
-  @NgModule({
-    imports: [BrowserModule, ReactiveFormsModule, HttpClientModule],
-  })
+```
+src/app/
+├── group-form/          el formulario: componente, plantilla y estilos
+├── models/group.model   tipado de grupo y persona
+└── services/email       envío del grupo
+```
 
-4. Para probar localmente, instala dependencias y ejecuta:
-   cd grupos-app
-   npm install
-   ng serve
+## Stack
 
-5. El backend local escucha en http://localhost:3000/api/groups (ver carpeta `../server`).
+Angular · TypeScript · RxJS · Angular Forms
 
-Nota: Este proyecto no incluye la app Angular completa (archivos generados por Angular CLI). Si quieres, puedo generar todo el proyecto completo y dejarlo listo para `ng serve`.
+## Ejecutarlo
+
+```bash
+npm install
+npm start           # http://localhost:4200
+```
+
+La API tiene que estar levantada aparte; la URL se configura en
+`src/enviroments/environment.prod.ts`.
+
+## Estado
+
+Proyecto de formación, terminado. Desplegado en su momento en Vercel contra la API
+en Render.
